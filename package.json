@@ -1,0 +1,26 @@
+{
+  "name": "covido_saviour",
+  "version": "1.0.0",
+  "description": "\"All about covid saviour \"",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shashank-001/covido-saviour.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/shashank-001/covido-saviour/issues"
+  },
+  "homepage": "https://github.com/shashank-001/covido-saviour#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "ejs": "^3.1.6",
+    "express": "^4.17.1",
+    "mongoose": "^5.12.12",
+    "nodemon": "^2.0.7"
+  }
+}
