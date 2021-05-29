@@ -1,0 +1,60 @@
+<%- include('partials/header'); -%>
+		<div class="join-container">
+			<header class="join-header">
+				<h1><i class="fas fa-smile"></i> ChatCord</h1>
+			</header>
+			<main class="join-main">
+				<form POST="/Message">
+					<div class="form-control">
+						<!-- <label style="padding: 5px;" for="username">Username</label> -->
+						<input
+							type="text"
+							name="username"
+							id="username"
+							placeholder="Enter username..."
+							required
+						/>
+					</div>
+					<div class="form-control">
+						<!-- <label for="room">Cities</label> -->
+						<select name="room" id="room">
+							<option value="Bihar">Bihar</option>
+							<option value="Delhi">Delhi</option>
+							<option value="Jaipur">Jaipur</option>
+							<option value="Mumbai">Mumbai</option>
+							<option value="Ahemdabad">Ahamdabad</option>
+							<option value="calcutta">Caulcatta</option>
+							<option value="Hariyana">Hariyana</option>
+							<option value="Punjab">Punjab</option>
+							<option value="Ranchi">Ranchi</option>
+							<option value="Bhubneshwar">Bhubneshwar</option>
+							<option value="Chennai">Chennai</option>
+							<option value=""></option>
+							<option value=""></option>
+							<option value=""></option>
+							<option value=""></option>
+							<option value=""></option>
+							<option value=""></option>
+							<option value=""></option>
+							<option value=""></option>
+							<option value=""></option>
+							<option value=""></option>
+							<option value=""></option>
+							<option value=""></option>
+							<option value=""></option>
+							<option value=""></option>
+							<option value=""></option>
+							<option value=""></option>
+							<option value=""></option>
+							<option value=""></option>
+							
+						</select>
+					</div>
+					<button type="submit" class="btn">Join Chat</button>
+				</form>
+			</main>
+    </div>
+<%- include('partials/footer'); -%>    
+
+
+

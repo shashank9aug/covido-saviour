@@ -1,34 +1,87 @@
 const express = require("express")
 const bodyParser = require("body-parser")
 const ejs = require("ejs")
+const path = require('path');
+const http = require('http');
+const socketio = require('socket.io');
+const formatMessage = require('./utils/messages');
+
 
 const app = express()
+const {
+    userJoin,
+    getCurrentUser,
+    userLeave,
+    getRoomUsers
+} = require('./utils/user');
+
+const server = http.createServer(app);
+const io = socketio(server);
 
 app.set('view engine','ejs');
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(express.static("public"));
 
 
-const mongoose = require("mongoose")
-const urldb = MONGODB_LINK
-mongoose.connect(urldb,{useNewUrlParser:true,useUnifiedTopology: true });
-mongoose.set("useCreateIndex",true);
-
-const postSchema ={
-    userName:String,
-    postTitle:String,
-    postDate:String,
-    postDescription:String,
-    pinCode:Number
-};
-
-const userSchema = new mongoose.Schema({
-    email:String,
-    password:String,
-    posts:[postSchema]
+io.on('connection', socket => {
+    socket.on('joinRoom', ({ username, room }) => {
+      const user = userJoin(socket.id, username, room);
+  
+      socket.join(user.room);
+  
+      // Welcome current user
+      socket.emit('message', formatMessage(botName, 'Welcome to ChatCord!'));
+  
+      // Broadcast when a user connects
+      socket.broadcast
+        .to(user.room)
+        .emit(
+          'message',
+          formatMessage(botName, `${user.username} has joined the chat`)
+        );
+  
+      // Send users and room info
+      io.to(user.room).emit('roomUsers', {
+        room: user.room,
+        users: getRoomUsers(user.room)
+      });
+    });
+  
+    // Listen for chatMessage
+    socket.on('chatMessage', msg => {
+      const user = getCurrentUser(socket.id);
+  
+      io.to(user.room).emit('message', formatMessage(user.username, msg));
+    });
+  
+    // Runs when client disconnects
+    socket.on('disconnect', () => {
+      const user = userLeave(socket.id);
+  
+      if (user) {
+        io.to(user.room).emit(
+          'message',
+          formatMessage(botName, `${user.username} has left the chat`)
+        );
+  
+        // Send users and room info
+        io.to(user.room).emit('roomUsers', {
+          room: user.room,
+          users: getRoomUsers(user.room)
+        });
+      }
+    });
 });
+  
+// const PORT = process.env.PORT || 3000;
+  
+// server.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 
-const User=new mongoose.model("User",userSchema);
+
+
+
+const mongoose = require("mongoose")
+
 
 const port=3000
 app.get("/",(req,res)=>{
@@ -47,9 +100,23 @@ app.get("/posts",(req,res)=>{
     res.render("posts")
 })
 
+app.get("/all",(req,res)=>{
+    res.render("Allnews")
+})
+
+
+
 app.get("/posts_fun",(req,res)=>{
     res.render("posts_fun")
 })
+app.get("/chat",(req,res)=>{
+    res.render("chat")
+})
+app.get("/chat",(req,res)=>{
+    res.render("chat")
+})
+
+
 
 app.get("/compose",(req,res)=>{
     res.render("compose")
