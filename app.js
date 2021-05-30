@@ -8,12 +8,43 @@ const formatMessage = require('./utils/messages');
 
 
 const app = express()
-const {
-    userJoin,
-    getCurrentUser,
-    userLeave,
-    getRoomUsers
-} = require('./utils/user');
+// const {
+//     userJoin,
+//     getCurrentUser,
+//     userLeave,
+//     getRoomUsers
+// } = require('./utils/user');
+
+const users = [];
+
+// Join user to chat
+function userJoin(id, username, room) {
+  const user = { id, username, room };
+
+  users.push(user);
+
+  return user;
+}
+
+// Get current user
+function getCurrentUser(id) {
+  return users.find(user => user.id === id);
+}
+
+// User leaves chat
+function userLeave(id) {
+  const index = users.findIndex(user => user.id === id);
+
+  if (index !== -1) {
+    return users.splice(index, 1)[0];
+  }
+}
+
+// Get room users
+function getRoomUsers(room) {
+  return users.filter(user => user.room === room);
+}
+
 
 const server = http.createServer(app);
 const io = socketio(server);
@@ -77,10 +108,8 @@ io.on('connection', socket => {
   
 // server.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 
-
-
-
 const mongoose = require("mongoose")
+
 
 
 const port=3000
@@ -112,11 +141,14 @@ app.get("/posts_fun",(req,res)=>{
 app.get("/chat",(req,res)=>{
     res.render("chat")
 })
-app.get("/chat",(req,res)=>{
-    res.render("chat")
+
+app.post("/chat",(req,res)=>{
+    res.redirect("/messages")
 })
 
-
+app.get("/messages",(req,res)=>{
+    res.render("messages")
+})
 
 app.get("/compose",(req,res)=>{
     res.render("compose")

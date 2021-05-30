@@ -12,7 +12,7 @@ a{
 /*Navbar Formatting Starts*/
 
 .navbar a:hover,#brand-link:hover{
-    color:rgb(17, 0, 110) !important;
+    color:rgb(83, 98, 233) !important;
     font-weight: bolder !important;
 }
 
@@ -65,7 +65,7 @@ a{
 }
 #ALLhomepost img{
     margin: 2%;
-    border: solid 2px #0160a3;
+    border: solid 2px #e7bc2e;
     border-radius: 3%;
     min-width: 40%;
     max-width:60%;
@@ -375,7 +375,7 @@ a{
 /* ButtonStyle Ends */
 
 #footer{
-    background-image: linear-gradient(135deg, #667eea 0%, #764ba2 100%)!important;
+    background-image: linear-gradient(135deg, #e69e33 0%, #8f9c17 100%)!important;
     bottom: 0 !important;
     width:100%; 
     margin-top: 3%;
