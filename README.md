@@ -1,5 +1,3 @@
-# COVIDO-SAVIOUR
-
 
 # COVIDO-SAVIOUR. 
 
